@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>极客视界</title>
+    <link rel="icon" type="image/png" href="https://s3.cn-north-1.amazonaws.com.cn/official/common1.0/images/favicon.ico"></link>
+    <link rel="stylesheet" type="text/css" href="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/css/common.css" ></link>
+    <link rel="stylesheet" type="text/css" href="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/css/base.css" ></link>
+    <link rel="stylesheet" type="text/css" href="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/css/daily_list.css" ></link>
+    <script src="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/js/jquery.js"></script>
+
+</head>
+<body>
+<img style="width: 480px;height: 110px" src="image/head.jpg"></img>
+<h2 th:text="'统计截止:'+${#dates.format(updateDate, 'yyyy年MM月dd日hh时')}">更新时间</h2>
+<div>
+    <h2 style="align-content: center">京东众筹</h2>
+    <div class="cxt__table_wrap">
+        <table border="0" cellspacing="0" cellpadding="0" width="45%">
+            <tbody>
+                <tr>
+                    <th style="width: 60px;">#</th>
+                    <th style="width: 479px;">项目名称</th>
+                    <th class="table_list__num" style="width: 105px;">
+                        <span class="list__arrow"></span>净增额
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="cxt__table_wrap cxt__table_list">
+        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
+                <div th:each="product,productStat:${tbTop5}">
+                    <tr data-id = "${product.pkId}">
+                        <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
+                        <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
+                        <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
+                    </tr>
+                </div>
+        </table>
+    </div>
+</div>
+<div class="cxt__table_wrap">
+    <table border="0" cellspacing="0" cellpadding="0" width="45%" id="table_header">
+        <tbody>
+        <tr>
+            <th style="width: 60px;">#</th>
+            <th style="width: 479px;">项目名称</th>
+            <th class="table_list__num" style="width: 105px;">
+                <span class="list__arrow"></span>净增额
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="cxt__table_wrap cxt__table_list">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
+        <div th:each="product,productStat:${jdTop5}">
+            <tr data-id = "${product.pkId}">
+                <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
+                <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
+                <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
+            </tr>
+        </div>
+    </table>
+</div>
+
+<div class="cxt__table_wrap">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_header">
+        <tbody>
+        <tr>
+            <th style="width: 60px;">#</th>
+            <th style="width: 479px;">项目名称</th>
+            <th class="table_list__num" style="width: 105px;" data-sort="targetMoney">
+                <span class="list__arrow"></span>净增额
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="cxt__table_wrap cxt__table_list">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
+        <div th:each="product,productStat:${ksTop5}">
+            <tr data-id = "${product.pkId}">
+                <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
+                <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
+                <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
+            </tr>
+        </div>
+    </table>
+</div>
+
+<div class="cxt__table_wrap">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_header">
+        <tbody>
+        <tr>
+            <th style="width: 60px;">#</th>
+            <th style="width: 479px;">项目名称</th>
+            <th class="table_list__num" style="width: 105px;" data-sort="targetMoney">
+                <span class="list__arrow"></span>净增额
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="cxt__table_wrap cxt__table_list">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
+        <div th:each="product,productStat:${inTop5}">
+            <tr data-id = "${product.pkId}">
+                <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
+                <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
+                <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
+            </tr>
+        </div>
+    </table>
+</div>
+</body>
+</html>
