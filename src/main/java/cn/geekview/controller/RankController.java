@@ -16,6 +16,11 @@ public class RankController {
     @Autowired
     TDreamProductService productService;
 
+    @RequestMapping(value = "index",method = RequestMethod.GET)
+    public String index(){
+        return "index";
+    }
+
     @RequestMapping(value = "/top5",method = RequestMethod.GET )
     public String queryPlatformGrowthSpeedRankTop5(Model model){
 
