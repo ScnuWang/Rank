@@ -23,7 +23,6 @@ public class RankController {
 
     @RequestMapping(value = "/top5",method = RequestMethod.GET )
     public String queryPlatformGrowthSpeedRankTop5(Model model){
-
         Map maparm = productService.queryPlatformGrowthSpeedRankTop5();
         model.addAttribute("tbTop5",maparm.get("tbTop5"));
         model.addAttribute("jdTop5",maparm.get("jdTop5"));

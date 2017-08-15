@@ -1,118 +1,98 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>极客视界</title>
-    <link rel="icon" type="image/png" href="https://s3.cn-north-1.amazonaws.com.cn/official/common1.0/images/favicon.ico"></link>
-    <link rel="stylesheet" type="text/css" href="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/css/common.css" ></link>
-    <link rel="stylesheet" type="text/css" href="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/css/base.css" ></link>
-    <link rel="stylesheet" type="text/css" href="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/css/daily_list.css" ></link>
-    <script src="https://s3.cn-north-1.amazonaws.com.cn/index/pc/pc_index0.8/js/jquery.js"></script>
-
+    <link rel="icon" type="image/png" href="image/favicon.ico"></link>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link href="css/index.css" rel="stylesheet"></link>
 </head>
 <body>
-<img style="width: 480px;height: 110px" src="image/head.jpg"></img>
-<h2 th:text="'统计截止:'+${#dates.format(updateDate, 'yyyy年MM月dd日hh时')}">更新时间</h2>
-<div>
-    <h2 style="align-content: center">京东众筹</h2>
-    <div class="cxt__table_wrap">
-        <table border="0" cellspacing="0" cellpadding="0" width="45%">
-            <tbody>
-                <tr>
-                    <th style="width: 60px;">#</th>
-                    <th style="width: 479px;">项目名称</th>
-                    <th class="table_list__num" style="width: 105px;">
-                        <span class="list__arrow"></span>净增额
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="cxt__table_wrap cxt__table_list">
-        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
-                <div th:each="product,productStat:${tbTop5}">
-                    <tr data-id = "${product.pkId}">
-                        <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
-                        <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
-                        <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
-                    </tr>
-                </div>
-        </table>
-    </div>
-</div>
-<div class="cxt__table_wrap">
-    <table border="0" cellspacing="0" cellpadding="0" width="45%" id="table_header">
-        <tbody>
-        <tr>
-            <th style="width: 60px;">#</th>
-            <th style="width: 479px;">项目名称</th>
-            <th class="table_list__num" style="width: 105px;">
-                <span class="list__arrow"></span>净增额
-            </th>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="cxt__table_wrap cxt__table_list">
-    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
-        <div th:each="product,productStat:${jdTop5}">
-            <tr data-id = "${product.pkId}">
-                <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
-                <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
-                <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
-            </tr>
-        </div>
-    </table>
-</div>
-
-<div class="cxt__table_wrap">
-    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_header">
-        <tbody>
-        <tr>
-            <th style="width: 60px;">#</th>
-            <th style="width: 479px;">项目名称</th>
-            <th class="table_list__num" style="width: 105px;" data-sort="targetMoney">
-                <span class="list__arrow"></span>净增额
-            </th>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="cxt__table_wrap cxt__table_list">
-    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
-        <div th:each="product,productStat:${ksTop5}">
-            <tr data-id = "${product.pkId}">
-                <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
-                <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
-                <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
-            </tr>
-        </div>
-    </table>
-</div>
-
-<div class="cxt__table_wrap">
-    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_header">
-        <tbody>
-        <tr>
-            <th style="width: 60px;">#</th>
-            <th style="width: 479px;">项目名称</th>
-            <th class="table_list__num" style="width: 105px;" data-sort="targetMoney">
-                <span class="list__arrow"></span>净增额
-            </th>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="cxt__table_wrap cxt__table_list">
-    <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table_list">
-        <div th:each="product,productStat:${inTop5}">
-            <tr data-id = "${product.pkId}">
-                <td style="width: 60px;"><span th:if="${productStat.index+1 lt 4}" th:text="${productStat.index+1}" class="table_list__circle"></span></td>
-                <td class="table_list__num" style="width: 105px;" th:text="${product.productName}"></td>
-                <td class="table_list__num" style="width: 110px;" th:text="${product.growthMoney}"></td>
-            </tr>
-        </div>
-    </table>
-</div>
+<img src="image/head.png" class="img-responsive" alt="极客视界"></img>
+<div th:text="'统计截止时间：'+${#dates.format(updateDate, 'yyyy年MM月dd日12时')}" style="font-size: larger;background-color: #b1b4b6;padding-left: 10px">统计截止时间：2017年08月15日12时</div>
+<table class="table table-striped">
+    <!--<caption class="text-center" style="font-size: larger">京东众筹</caption>-->
+    <thead>
+    <tr style="background-color: #358de6">
+        <th>#</th>
+        <th>项目名称</th>
+        <th>净增额（元）</th>
+    </tr>
+    </thead>
+    <tbody >
+    <caption th:if="jdTop5" class="text-center" style="font-size: larger">京东众筹</caption>
+    <tr >
+        <td >
+            <span  class="table_list__circle top3">1</span>
+        </td>
+        <td>
+            奥运直饮水返回的撒发货撒发
+        </td>
+        <td>33333.33</td>
+    </tr>
+    <tr>
+        <td><span  class="table_list__circle top3">2</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    <tr>
+        <td><span  class="table_list__circle top3">3</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    <tr>
+        <td><span  class="table_list__circle">4</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    <tr >
+        <td><span  class="table_list__circle">5</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    </tbody>
+</table>
+<table class="table table-striped">
+    <caption class="text-center" style="font-size: larger">淘宝众筹</caption>
+    <thead>
+    <tr style="background-color: #358de6">
+        <th>#</th>
+        <th>项目名称</th>
+        <th>净增额（元）</th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr >
+        <td >
+            <span  class="table_list__circle top3">1</span>
+        </td>
+        <td>
+            奥运直饮水返回的撒发货撒发
+        </td>
+        <td>33333.33</td>
+    </tr>
+    <tr>
+        <td><span  class="table_list__circle top3">2</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    <tr>
+        <td><span  class="table_list__circle top3">3</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    <tr>
+        <td><span  class="table_list__circle">4</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    <tr >
+        <td><span  class="table_list__circle">5</span></td>
+        <td>净水器</td>
+        <td>66666.66</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
