@@ -12,7 +12,7 @@ import java.util.*;
 @Service("TDreamProductServiceImpl")
 public class TDreamProductServiceImpl implements TDreamProductService {
 
-    private Date date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth(),12,0,0).toDate();
+    private Date date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth()-1,12,0,0).toDate();
 
     @Autowired
     private TDreamProductMapper productMapper;

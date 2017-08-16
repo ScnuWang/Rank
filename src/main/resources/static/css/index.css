@@ -1,0 +1,20 @@
+body,button, input, select,textarea,h1 ,h2, h3, h4, h5, h6 { font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #e0edfd;
+}
+.table_list__circle {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #A3ABB3;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #6b6b6b;
+    text-align: center;
+    font-size: 14px;
+}
+.top3 {
+    background-color: #599ef4;
+    color: #fff;
+    border: 1px solid #599ef4;
+}

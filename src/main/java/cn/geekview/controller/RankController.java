@@ -31,4 +31,22 @@ public class RankController {
         model.addAttribute("updateDate",maparm.get("updateDate"));
         return "rank";
     }
+
+    @RequestMapping(value = "/internal",method = RequestMethod.GET )
+    public String queryInternalGrowthSpeedRankTop5(Model model){
+        Map maparm = productService.queryPlatformGrowthSpeedRankTop5();
+        model.addAttribute("tbTop5",maparm.get("tbTop5"));
+        model.addAttribute("jdTop5",maparm.get("jdTop5"));
+        model.addAttribute("updateDate",maparm.get("updateDate"));
+        return "internal";
+    }
+
+    @RequestMapping(value = "/overseas",method = RequestMethod.GET )
+    public String queryOverseasGrowthSpeedRankTop5(Model model){
+        Map maparm = productService.queryPlatformGrowthSpeedRankTop5();
+        model.addAttribute("ksTop5",maparm.get("ksTop5"));
+        model.addAttribute("inTop5",maparm.get("inTop5"));
+        model.addAttribute("updateDate",maparm.get("updateDate"));
+        return "overseas";
+    }
 }
