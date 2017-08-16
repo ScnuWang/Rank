@@ -16,20 +16,9 @@ public class RankController {
     @Autowired
     TDreamProductService productService;
 
-    @RequestMapping(value = "index",method = RequestMethod.GET)
+    @RequestMapping(value = "",method = RequestMethod.GET)
     public String index(){
         return "index";
-    }
-
-    @RequestMapping(value = "/top5",method = RequestMethod.GET )
-    public String queryPlatformGrowthSpeedRankTop5(Model model){
-        Map maparm = productService.queryPlatformGrowthSpeedRankTop5();
-        model.addAttribute("tbTop5",maparm.get("tbTop5"));
-        model.addAttribute("jdTop5",maparm.get("jdTop5"));
-        model.addAttribute("ksTop5",maparm.get("ksTop5"));
-        model.addAttribute("inTop5",maparm.get("inTop5"));
-        model.addAttribute("updateDate",maparm.get("updateDate"));
-        return "rank";
     }
 
     @RequestMapping(value = "/internal",method = RequestMethod.GET )

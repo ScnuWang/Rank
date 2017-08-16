@@ -13,10 +13,10 @@ import java.util.List;
 public interface TDreamProductMapper {
 
     String sql_all = "SELECT p.pk_id,p.product_name,p.product_url,p.website,t.growth_money from t_dream_rank_growth t,t_dream_product p " +
-            "where t.product_id = p.pk_id and t.update_date = #{updateDate}  ORDER BY t.growth_money DESC ";
+            "where t.product_id = p.pk_id and t.update_date = #{updateDate} and p.product_enabled = 1  ORDER BY t.growth_money DESC ";
 
     String sal_platform = "SELECT p.pk_id,p.product_name,p.product_url,p.website,t.growth_money from t_dream_rank_growth t,t_dream_product p " +
-            "where t.product_id = p.pk_id and t.update_date = #{updateDate} AND p.website = #{website}  " +
+            "where t.product_id = p.pk_id and t.update_date = #{updateDate} and p.product_enabled = 1 AND p.website = #{website}  " +
                     "ORDER BY t.growth_money DESC LIMIT 5 ";
 
     /**
