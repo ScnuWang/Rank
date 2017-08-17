@@ -1,0 +1,16 @@
+package cn.geekview.service;
+
+public interface RedisService {
+
+    void set(String key,String value);
+
+    void set(String key,Object object);
+
+    String get(String key);
+
+    Object getObject(String key);
+
+    void delete(String key);
+
+    boolean expire(String key,long timeout);
+}
