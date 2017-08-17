@@ -23,10 +23,6 @@ public class RankController {
     @Autowired
     TDreamProductService productService;
 
-    @RequestMapping(value = "",method = RequestMethod.GET)
-    public String index(){
-        return "index";
-    }
 
     /**
      * 国内增速帮前五
