@@ -1,11 +1,13 @@
 package cn.geekview.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class TDreamProduct {
-    private Integer pkId;
+public class TDreamProduct implements Serializable {
+	private static final long serialVersionUID = -7026490024614475763L;
+	private Integer pkId;
 
 	private Integer website;
 

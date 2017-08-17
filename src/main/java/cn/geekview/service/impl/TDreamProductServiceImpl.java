@@ -2,6 +2,7 @@ package cn.geekview.service.impl;
 
 import cn.geekview.domain.TDreamProduct;
 import cn.geekview.mapper.TDreamProductMapper;
+import cn.geekview.service.RedisService;
 import cn.geekview.service.TDreamProductService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class TDreamProductServiceImpl implements TDreamProductService {
 
     @Autowired
     private TDreamProductMapper productMapper;
+
 
     //第一次查询放入redis中，后面直接从redis中取值
     @Override

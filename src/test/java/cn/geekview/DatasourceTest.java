@@ -1,6 +1,8 @@
 package cn.geekview;
 
+import cn.geekview.domain.TDreamProduct;
 import cn.geekview.mapper.TDreamProductMapper;
+import cn.geekview.service.RedisService;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -18,12 +21,16 @@ public class DatasourceTest {
     @Autowired
     private TDreamProductMapper productMapper;
 
+    @Autowired
+    private RedisService redisService;
 
     @Test
     public void test(){
         DateTime dateTime = DateTime.now();
-        DateTime date = new DateTime(dateTime.getYear(),dateTime.getMonthOfYear(),dateTime.getDayOfMonth(),12,0,0);
-        System.out.println(productMapper.queryPlatformGrowthSpeedRankTop5(dateTime.toDate(),1));
+        DateTime date = new DateTime(dateTime.getYear(),dateTime.getMonthOfYear(),15,12,0,0);
+        List<TDreamProduct> tblist = productMapper.queryPlatformGrowthSpeedRankTop5(date.toDate(),1);
+        redisService.set("tblist",tblist);
+        System.out.println(redisService.getObject("tblist"));
 
     }
 

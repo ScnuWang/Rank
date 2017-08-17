@@ -1,5 +1,7 @@
 package cn.geekview.controller;
 
+import cn.geekview.domain.TDreamProduct;
+import cn.geekview.service.RedisService;
 import cn.geekview.service.TDreamProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
+import java.util.List;
 import java.util.Map;
 
+/**
+ * 每日增速排行榜前五
+ * 分国内国外
+ */
 @Controller
 public class RankController {
 
@@ -21,6 +28,11 @@ public class RankController {
         return "index";
     }
 
+    /**
+     * 国内增速帮前五
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/internal",method = RequestMethod.GET )
     public String queryInternalGrowthSpeedRankTop5(Model model){
         Map maparm = productService.queryPlatformGrowthSpeedRankTop5();
@@ -30,6 +42,11 @@ public class RankController {
         return "internal";
     }
 
+    /**
+     * 国外增速帮前五
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/overseas",method = RequestMethod.GET )
     public String queryOverseasGrowthSpeedRankTop5(Model model){
         Map maparm = productService.queryPlatformGrowthSpeedRankTop5();
