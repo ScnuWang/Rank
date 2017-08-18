@@ -45,4 +45,5 @@ public class RedisServiceImpl implements RedisService{
     public boolean expire(String key, long timeout) {
         return redisTemplate.expire(key,timeout, TimeUnit.SECONDS);
     }
+
 }

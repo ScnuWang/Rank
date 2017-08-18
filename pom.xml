@@ -33,9 +33,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<!--注意：<optional>true</optional>只有设置为true时才会热启动，即当修改了html、css、js等这些静态资源后不用重启项目直接刷新即可-->
-			<!--<optional>true</optional>-->
-			<!--<scope>runtime</scope>-->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

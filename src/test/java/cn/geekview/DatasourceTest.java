@@ -25,12 +25,16 @@ public class DatasourceTest {
     private RedisService redisService;
 
     @Test
-    public void test(){
+    public void test() throws InterruptedException {
         DateTime dateTime = DateTime.now();
         DateTime date = new DateTime(dateTime.getYear(),dateTime.getMonthOfYear(),15,12,0,0);
         List<TDreamProduct> tblist = productMapper.queryPlatformGrowthSpeedRankTop5(date.toDate(),1);
         redisService.set("tblist",tblist);
-        System.out.println(redisService.getObject("tblist"));
+        System.out.println("存入Redis："+redisService.getObject("tblist"));
+        //设置有效时间
+        redisService.expire("tblist",30);
+        Thread.sleep(40*1000);
+        System.out.println("取出Redis："+redisService.getObject("tblist"));
 
     }
 
