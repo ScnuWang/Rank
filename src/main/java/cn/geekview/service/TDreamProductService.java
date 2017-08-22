@@ -10,4 +10,6 @@ public interface TDreamProductService {
     Map<String,List> queryPlatformGrowthSpeedRankTop5();
 
     List<TDreamProduct> queryAllGrowthSpeedRank();
+
+    Map<String,List> query7DaysPlatformGrowthSpeedRankTop5();
 }

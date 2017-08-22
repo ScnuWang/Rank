@@ -13,10 +13,29 @@ import java.util.*;
 @Service("TDreamProductServiceImpl")
 public class TDreamProductServiceImpl implements TDreamProductService {
 
-    private Date date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth()-1,12,0,0).toDate();
+    private DateTime date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth(),12,0,0);
 
     @Autowired
     private TDreamProductMapper productMapper;
+
+    /**
+     * 七天数据查询
+     * @return
+     */
+    @Override
+    public Map<String, List> query7DaysPlatformGrowthSpeedRankTop5() {
+        Map maParm = new HashMap();
+        maParm.put("tb","t_dream_tb_project");
+        maParm.put("jd","t_dream_jd_project");
+        maParm.put("ks","t_dream_ks_project");
+        maParm.put("in","t_dream_in_project");
+        maParm.forEach((key, value) -> {
+            System.out.println(key+":"+value);
+            maParm.put(key+"OldList",productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value)));
+        });
+        return null;
+    }
+
 
 
     //第一次查询放入redis中，后面直接从redis中取值
@@ -51,7 +70,9 @@ public class TDreamProductServiceImpl implements TDreamProductService {
     @Override
     public List<TDreamProduct> queryAllGrowthSpeedRank() {
         //加一个分页
-        return productMapper.queryAllGrowthSpeedRank(date);
+        return null;
     }
+
+
 
 }

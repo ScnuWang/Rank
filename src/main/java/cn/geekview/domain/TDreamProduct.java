@@ -7,7 +7,10 @@ import java.util.List;
 
 public class TDreamProduct implements Serializable {
 	private static final long serialVersionUID = -7026490024614475763L;
+
 	private Integer pkId;
+
+	private Integer originalId;
 
 	private Integer website;
 
@@ -18,6 +21,24 @@ public class TDreamProduct implements Serializable {
 	private BigDecimal growthMoney;
 
 	private Date updateDate;
+
+	private String moneyCurrency;
+
+	public Integer getOriginalId() {
+		return originalId;
+	}
+
+	public void setOriginalId(Integer originalId) {
+		this.originalId = originalId;
+	}
+
+	public String getMoneyCurrency() {
+		return moneyCurrency;
+	}
+
+	public void setMoneyCurrency(String moneyCurrency) {
+		this.moneyCurrency = moneyCurrency;
+	}
 
 	public Integer getPkId() {
 		return pkId;
@@ -71,11 +92,13 @@ public class TDreamProduct implements Serializable {
 	public String toString() {
 		return "TDreamProduct{" +
 				"pkId=" + pkId +
+				", originalId=" + originalId +
 				", website=" + website +
 				", productName='" + productName + '\'' +
 				", productUrl='" + productUrl + '\'' +
 				", growthMoney=" + growthMoney +
 				", updateDate=" + updateDate +
+				", moneyCurrency=" + moneyCurrency +
 				'}';
 	}
 }
