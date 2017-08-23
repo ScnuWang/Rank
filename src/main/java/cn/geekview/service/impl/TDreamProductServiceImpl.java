@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service("TDreamProductServiceImpl")
@@ -18,22 +19,48 @@ public class TDreamProductServiceImpl implements TDreamProductService {
     @Autowired
     private TDreamProductMapper productMapper;
 
+    @Autowired
+    private RedisService redisService;
+
     /**
      * 七天数据查询
      * @return
      */
     @Override
     public Map<String, List> query7DaysPlatformGrowthSpeedRankTop5() {
+        Map table = new HashMap();
         Map maParm = new HashMap();
-        maParm.put("tb","t_dream_tb_project");
-        maParm.put("jd","t_dream_jd_project");
-        maParm.put("ks","t_dream_ks_project");
-        maParm.put("in","t_dream_in_project");
-        maParm.forEach((key, value) -> {
-            System.out.println(key+":"+value);
-            maParm.put(key+"OldList",productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value)));
+        table.put("tb","t_dream_tb_project");
+        table.put("jd","t_dream_jd_project");
+        table.put("ks","t_dream_ks_project");
+        table.put("in","t_dream_in_project");
+        table.forEach((key, value) -> {
+//            System.out.println(key+":"+value);
+            List<TDreamProduct> list = new ArrayList<>();
+            //查询日期一周前开始众筹的
+            List<TDreamProduct> oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
+            //查询日期一周内新上的
+            List<TDreamProduct> newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
+            list.addAll(oldlist);
+            list.addAll(newlist);
+            if (list != null&&list.size()>0) {
+                for (TDreamProduct product : list) {
+                    if (product!=null){
+                        BigDecimal currencyExchange =  redisService.getCurrencyExchange(product.getMoneyCurrency());
+                        BigDecimal growthMoneyCNY =  currencyExchange.multiply(product.getGrowthMoney());
+                        product.setGrowthMoney(growthMoneyCNY);
+                    }
+                }
+            }
+            Collections.sort(list,new Comparator<TDreamProduct>() {
+                @Override
+                public int compare(TDreamProduct o1, TDreamProduct o2) {//默认是升序排列，如果要降序，将对象互换即可
+                    return o2.getGrowthMoney().compareTo(o1.getGrowthMoney());
+                }
+            });
+            maParm.put(key+"WeekList",list);
         });
-        return null;
+        return maParm;
     }
 
 

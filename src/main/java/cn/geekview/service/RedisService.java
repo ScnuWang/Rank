@@ -1,5 +1,7 @@
 package cn.geekview.service;
 
+import java.math.BigDecimal;
+
 public interface RedisService {
 
     void set(String key,String value);
@@ -13,4 +15,6 @@ public interface RedisService {
     void delete(String key);
 
     boolean expire(String key,long timeout);
+
+    BigDecimal getCurrencyExchange(String currencyNick);
 }

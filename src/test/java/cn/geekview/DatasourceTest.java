@@ -60,7 +60,7 @@ public class DatasourceTest {
 
     @Test
     public void test4(){
-        productService.query7DaysPlatformGrowthSpeedRankTop5();
+        System.out.println(productService.query7DaysPlatformGrowthSpeedRankTop5());
     }
 
     @Test

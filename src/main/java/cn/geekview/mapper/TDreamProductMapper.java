@@ -28,7 +28,7 @@ public interface TDreamProductMapper {
     //查询时间一周内新上的项目增速榜前5名
     String sql_7days_newprojects = "SELECT t.original_id, t.project_name, IFNULL(t.money_currency, 'CNY') as money_currency , t.curr_money " +
             "FROM ${tableName} t WHERE t.update_date > #{weekBeforeDate} AND t.status_value = 2 " +
-            "AND t.update_date < #{nowDatePlus} " +
+            "AND t.update_date < #{nowDatePlus1} " +
             "AND t.original_id NOT IN " +
             "( SELECT t.original_id FROM ${tableName} t WHERE t.update_date = #{weekBeforeDate}) " +
             "ORDER BY t.curr_money DESC LIMIT 35";
@@ -50,7 +50,7 @@ public interface TDreamProductMapper {
 
     /**
      * 根据更新时间和平台编号查询平台一周的增速榜前5名
-     * @param nowDate  当前查询时间
+     * @param nowDatePlus1  当前查询时间
      * @param weekBeforeDate  一周前的时间
      * @param tableName 表名  表名不需要预编译，故使用$(变量名取值)
      * @return
@@ -62,7 +62,7 @@ public interface TDreamProductMapper {
             @Result(property = "moneyCurrency",column = "money_currency",jdbcType = JdbcType.VARCHAR),
             @Result(property = "growthMoney",column = "curr_money",jdbcType = JdbcType.DECIMAL),
     })
-    List<TDreamProduct> query7DaysNewpeojectsRankTop5(@Param("nowDatePlus") Date nowDate,@Param("weekBeforeDate") Date weekBeforeDate,@Param("tableName") String tableName);
+    List<TDreamProduct> query7DaysNewpeojectsRankTop5(@Param("nowDatePlus1") Date nowDatePlus1,@Param("weekBeforeDate") Date weekBeforeDate,@Param("tableName") String tableName);
 
     /**
      *  查询所有平台当天的增速排行榜
