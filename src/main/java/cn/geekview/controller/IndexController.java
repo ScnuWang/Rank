@@ -11,7 +11,7 @@ import java.io.IOException;
 @Controller
 public class IndexController {
 
-    @RequestMapping
+    @RequestMapping("index")
     public String index(){
         return "index";
     }

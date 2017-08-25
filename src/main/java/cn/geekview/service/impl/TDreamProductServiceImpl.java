@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.*;
 
 @Service("TDreamProductServiceImpl")
@@ -34,32 +35,56 @@ public class TDreamProductServiceImpl implements TDreamProductService {
         table.put("jd","t_dream_jd_project");
         table.put("ks","t_dream_ks_project");
         table.put("in","t_dream_in_project");
-        table.forEach((key, value) -> {
-//            System.out.println(key+":"+value);
-            List<TDreamProduct> list = new ArrayList<>();
+        table.forEach((Object key, Object value) -> {
+            List<TDreamProduct> alllist = new ArrayList<>();
+
             //查询日期一周前开始众筹的
-            List<TDreamProduct> oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
+            List<TDreamProduct> oldlist = (List<TDreamProduct>) redisService.getObject(key+"oldlist");
+            if (oldlist==null||oldlist.size()==0){
+                oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
+                redisService.set(key+"oldlist",oldlist);
+                redisService.expire(key+"newlist",12*60*60);
+            }
             //查询日期一周内新上的
-            List<TDreamProduct> newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
-            list.addAll(oldlist);
-            list.addAll(newlist);
-            if (list != null&&list.size()>0) {
-                for (TDreamProduct product : list) {
+            List<TDreamProduct> newlist = (List<TDreamProduct>) redisService.getObject(key+"newlist");
+            if (newlist==null||newlist.size()==0){
+                newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
+                redisService.set(key+"newlist",oldlist);
+                redisService.expire(key+"newlist",12*60*60);
+            }
+            alllist.addAll(oldlist);
+            alllist.addAll(newlist);
+            //换算
+            if (alllist != null&&alllist.size()>0) {
+                for (TDreamProduct product : alllist) {
                     if (product!=null){
                         BigDecimal currencyExchange =  redisService.getCurrencyExchange(product.getMoneyCurrency());
                         BigDecimal growthMoneyCNY =  currencyExchange.multiply(product.getGrowthMoney());
                         product.setGrowthMoney(growthMoneyCNY);
+                        product.setMoneyCurrency("CNY");
                     }
                 }
-            }
-            Collections.sort(list,new Comparator<TDreamProduct>() {
-                @Override
-                public int compare(TDreamProduct o1, TDreamProduct o2) {//默认是升序排列，如果要降序，将对象互换即可
+                //排序
+                Collections.sort(alllist, (o1, o2) -> {//默认是升序排列，如果要降序，将对象互换即可
                     return o2.getGrowthMoney().compareTo(o1.getGrowthMoney());
+                });
+//                System.out.println("去重之前："+alllist);
+                //去重
+                Set<TDreamProduct> set = new HashSet<>();
+                for (TDreamProduct product : alllist) {
+                    set.add(product);
                 }
-            });
-            maParm.put(key+"WeekList",list);
+                List<TDreamProduct> resultlist = new ArrayList<>(set);
+                //排序
+                Collections.sort(resultlist, (o1, o2) -> {//默认是升序排列，如果要降序，将对象互换即可
+                    return o2.getGrowthMoney().compareTo(o1.getGrowthMoney());
+                });
+//                System.out.println("去重之后:"+resultlist.subList(0,5));
+                maParm.put(key+"WeekList",resultlist.subList(0,5));
+            }
         });
+        maParm.put("nowDate",date.toDate());
+        maParm.put("weekBeforeDate",date.plusDays(-7).toDate());
         return maParm;
     }
 

@@ -23,9 +23,20 @@ public class RankController {
     @Autowired
     TDreamProductService productService;
 
+    @RequestMapping(value = "/week",method = RequestMethod.GET)
+    public String queryWeekGrowthSpeedRankTop5(Model model){
+        Map maparm = productService.query7DaysPlatformGrowthSpeedRankTop5();
+        model.addAttribute("tbweek",maparm.get("tbWeekList"));
+        model.addAttribute("jdweek",maparm.get("jdWeekList"));
+        model.addAttribute("ksweek",maparm.get("ksWeekList"));
+        model.addAttribute("inweek",maparm.get("inWeekList"));
+        model.addAttribute("weekBeforeDate",maparm.get("weekBeforeDate"));
+        model.addAttribute("nowDate",maparm.get("nowDate"));
+        return "week";
+    }
 
     /**
-     * 国内增速帮前五
+     * 国内每天增速帮前五
      * @param model
      * @return
      */
@@ -39,7 +50,7 @@ public class RankController {
     }
 
     /**
-     * 国外增速帮前五
+     * 国外每天增速帮前五
      * @param model
      * @return
      */

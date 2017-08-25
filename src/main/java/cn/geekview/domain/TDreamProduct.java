@@ -101,4 +101,36 @@ public class TDreamProduct implements Serializable {
 				", moneyCurrency=" + moneyCurrency +
 				'}';
 	}
+
+//	@Override
+//	public boolean equals(Object o) {
+//		if (o == null){
+//			return false;
+//		}
+//		if (this == o) {
+//			return true;
+//		}
+//		if (o instanceof TDreamProduct){
+//			TDreamProduct that = (TDreamProduct)o;
+//			if (this.originalId == that.getOriginalId()){//that.originalId
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+	//对象进行比较
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null ) return false;
+
+		TDreamProduct that = (TDreamProduct) o;
+		return originalId.equals(that.originalId);
+	}
+
+	@Override
+	public int hashCode() {
+		return originalId.hashCode();
+	}
 }
