@@ -13,11 +13,11 @@
 <div th:text="'统计截止时间：'+${#dates.format(updateDate, 'yyyy年MM月dd日12时')}" style="font-size: larger;background-color: #b1b4b6;padding-left: 10px">统计截止时间：2017年08月15日12时</div>
 <table class="table table-striped">
     <thead>
-        <tr style="background-color: #358de6">
-            <th>#</th>
-            <th>项目名称</th>
-            <th>净增额（元）</th>
-        </tr>
+    <tr style="background-color: #358de6">
+        <th style="width: 50px">#</th>
+        <th style="width: 300px" >项目名称</th>
+        <th class="text-left" style="width: 170px;padding-left: 40px">净增额（元）</th>
+    </tr>
     </thead>
     <tbody >
         <caption class="text-center" style="font-size: larger">Kickstar</caption>
@@ -30,8 +30,8 @@
                 <td>
                     <span th:text="${product.productName}">产品名称</span>
                 </td>
-                <td>
-                    <span th:text="${product.growthMoney}">净增额</span>
+                <td class="text-right" style="padding-right: 60px">
+                    <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">净增额</span>
                 </td>
             </tr>
         </th:block>
@@ -40,11 +40,11 @@
 <table class="table table-striped">
     <caption class="text-center" style="font-size: larger">Indiegogo</caption>
     <thead>
-        <tr style="background-color: #358de6">
-            <th>#</th>
-            <th>项目名称</th>
-            <th>净增额（元）</th>
-        </tr>
+    <tr style="background-color: #358de6">
+        <th style="width: 50px">#</th>
+        <th style="width: 300px" >项目名称</th>
+        <th class="text-left" style="width: 170px;padding-left: 40px">净增额（元）</th>
+    </tr>
     </thead>
     <tbody >
         <th:block th:each="product,productStat:${inTop5}">
@@ -57,8 +57,8 @@
                 <td>
                     <span th:text="${product.productName}">产品名称</span>
                 </td>
-                <td>
-                    <span th:text="${product.growthMoney}">净增额</span>
+                <td class="text-right" style="padding-right: 60px">
+                    <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">净增额</span>
                 </td>
             </tr>
         </th:block>

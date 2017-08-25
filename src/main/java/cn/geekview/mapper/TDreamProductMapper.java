@@ -12,10 +12,10 @@ import java.util.List;
 
 public interface TDreamProductMapper {
 
-    String sql_all = "SELECT p.pk_id,p.product_name,p.product_url,p.website,t.growth_money from t_dream_rank_growth t,t_dream_product p " +
+    String sql_all = "SELECT p.pk_id,p.product_name,p.product_url,p.website,p.original_id,t.growth_money from t_dream_rank_growth t,t_dream_product p " +
             "where t.product_id = p.pk_id and t.update_date = #{updateDate} and p.product_enabled = 1  ORDER BY t.growth_money DESC ";
 
-    String sql_platform = "SELECT p.pk_id,p.product_name,p.product_url,p.website,t.growth_money from t_dream_rank_growth t,t_dream_product p " +
+    String sql_platform = "SELECT p.pk_id,p.product_name,p.product_url,p.website,p.original_id,t.growth_money from t_dream_rank_growth t,t_dream_product p " +
             "where t.product_id = p.pk_id and t.update_date = #{updateDate} and p.product_enabled = 1 AND p.website = #{website}  " +
                     "ORDER BY t.growth_money DESC LIMIT 5 ";
 
@@ -72,6 +72,7 @@ public interface TDreamProductMapper {
     @Select(sql_all)
     @Results({
             @Result(property = "pkId",column = "pk_id",jdbcType = JdbcType.INTEGER),
+            @Result(property = "originalId",column = "original_id",jdbcType = JdbcType.INTEGER),
             @Result(property = "website",column = "website",jdbcType = JdbcType.INTEGER),
             @Result(property = "productName",column = "product_name",jdbcType = JdbcType.VARCHAR),
             @Result(property = "productUrl",column = "product_url",jdbcType = JdbcType.VARCHAR),
@@ -88,6 +89,7 @@ public interface TDreamProductMapper {
     @Select(sql_platform)
     @Results({
             @Result(property = "pkId",column = "pk_id",jdbcType = JdbcType.INTEGER),
+            @Result(property = "originalId",column = "original_id",jdbcType = JdbcType.INTEGER),
             @Result(property = "website",column = "website",jdbcType = JdbcType.INTEGER),
             @Result(property = "productName",column = "product_name",jdbcType = JdbcType.VARCHAR),
             @Result(property = "productUrl",column = "product_url",jdbcType = JdbcType.VARCHAR),

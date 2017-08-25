@@ -1,5 +1,6 @@
 package cn.geekview.controller;
 
+import cn.geekview.aop.LoggerManage;
 import cn.geekview.domain.TDreamProduct;
 import cn.geekview.service.RedisService;
 import cn.geekview.service.TDreamProductService;
@@ -23,6 +24,7 @@ public class RankController {
     @Autowired
     TDreamProductService productService;
 
+    @LoggerManage(description = "周榜查询")
     @RequestMapping(value = "/week",method = RequestMethod.GET)
     public String queryWeekGrowthSpeedRankTop5(Model model){
         Map maparm = productService.query7DaysPlatformGrowthSpeedRankTop5();
@@ -40,6 +42,7 @@ public class RankController {
      * @param model
      * @return
      */
+    @LoggerManage(description = "国内日榜")
     @RequestMapping(value = "/internal",method = RequestMethod.GET )
     public String queryInternalGrowthSpeedRankTop5(Model model){
         Map maparm = productService.queryPlatformGrowthSpeedRankTop5();
@@ -54,6 +57,7 @@ public class RankController {
      * @param model
      * @return
      */
+    @LoggerManage(description = "国外日榜")
     @RequestMapping(value = "/overseas",method = RequestMethod.GET )
     public String queryOverseasGrowthSpeedRankTop5(Model model){
         Map maparm = productService.queryPlatformGrowthSpeedRankTop5();

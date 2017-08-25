@@ -4,6 +4,7 @@ import cn.geekview.domain.TDreamProduct;
 import cn.geekview.mapper.TDreamProductMapper;
 import cn.geekview.service.RedisService;
 import cn.geekview.service.TDreamProductService;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import java.util.*;
 
 @Service("TDreamProductServiceImpl")
 public class TDreamProductServiceImpl implements TDreamProductService {
+
+    protected Logger logger = Logger.getLogger(this.getClass());
 
     private DateTime date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth(),12,0,0);
 
@@ -37,17 +40,20 @@ public class TDreamProductServiceImpl implements TDreamProductService {
         table.put("in","t_dream_in_project");
         table.forEach((Object key, Object value) -> {
             List<TDreamProduct> alllist = new ArrayList<>();
-
             //查询日期一周前开始众筹的
+            logger.info(key+"从Redis中查询日期一周前开始众筹的产品");
             List<TDreamProduct> oldlist = (List<TDreamProduct>) redisService.getObject(key+"oldlist");
             if (oldlist==null||oldlist.size()==0){
+                logger.info(key+"从Mysql中查询日期一周前开始众筹的产品");
                 oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
                 redisService.set(key+"oldlist",oldlist);
                 redisService.expire(key+"newlist",12*60*60);
             }
             //查询日期一周内新上的
+            logger.info(key+"从Redis中查询日期一周内新上的产品");
             List<TDreamProduct> newlist = (List<TDreamProduct>) redisService.getObject(key+"newlist");
             if (newlist==null||newlist.size()==0){
+                logger.info(key+"从Mysql中查询日期一周内新上的产品");
                 newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
                 redisService.set(key+"newlist",oldlist);
                 redisService.expire(key+"newlist",12*60*60);
@@ -68,7 +74,6 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 Collections.sort(alllist, (o1, o2) -> {//默认是升序排列，如果要降序，将对象互换即可
                     return o2.getGrowthMoney().compareTo(o1.getGrowthMoney());
                 });
-//                System.out.println("去重之前："+alllist);
                 //去重
                 Set<TDreamProduct> set = new HashSet<>();
                 for (TDreamProduct product : alllist) {
@@ -79,7 +84,6 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 Collections.sort(resultlist, (o1, o2) -> {//默认是升序排列，如果要降序，将对象互换即可
                     return o2.getGrowthMoney().compareTo(o1.getGrowthMoney());
                 });
-//                System.out.println("去重之后:"+resultlist.subList(0,5));
                 maParm.put(key+"WeekList",resultlist.subList(0,5));
             }
         });
