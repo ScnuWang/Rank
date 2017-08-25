@@ -31,7 +31,7 @@
                 <span th:text="${product.productName}">产品名称</span>
             </td>
             <td class="text-right" style="padding-right: 60px">
-                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">净增额</span>
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">净增额</span>
             </td>
         </tr>
     </th:block>
@@ -58,7 +58,7 @@
                 <span th:text="${product.productName}">产品名称</span>
             </td>
             <td class="text-right" style="padding-right: 60px">
-                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">净增额</span>
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">净增额</span>
             </td>
         </tr>
     </th:block>

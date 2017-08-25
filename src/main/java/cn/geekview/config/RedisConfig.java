@@ -46,18 +46,6 @@ public class RedisConfig extends CachingConfigurerSupport  {
             }
             return stringBuilder.toString();
         });
-//        return new KeyGenerator() {
-//            @Override
-//            public Object generate(Object target, Method method, Object... params) {
-//                StringBuilder stringBuilder = new StringBuilder();
-//                stringBuilder.append(target.getClass().getName());
-//                stringBuilder.append(method.getName());
-//                for (Object param : params) {
-//                    stringBuilder.append(param);
-//                }
-//                return stringBuilder.toString();
-//            }
-//        }
     }
 
     /**

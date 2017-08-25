@@ -9,18 +9,19 @@
     <link href="css/index.css" rel="stylesheet"></link>
 </head>
 <body>
-<img src="image/head.png" class="img-responsive" alt="极客视界"></img>
+<img src="image/head.png" class="img-responsive" style="width: 100%" alt="极客视界"></img>
 <div th:text="'统计截止时间：'+${#dates.format(weekBeforeDate, 'yyyy年MM月dd日')}+'-'+${#dates.format(nowDate, 'yyyy年MM月dd日12时')}" style="font-size: larger;background-color: #b1b4b6;padding-left: 10px">统计截止时间：2017年08月15日12时</div>
 <table class="table table-striped">
     <thead>
-    <tr style="background-color: #358de6">
+    <tr style="background-color: #358de6;border-collapse:separate; border-spacing:0px 8px;color: white">
         <th style="width: 50px">#</th>
         <th style="width: 300px" >项目名称</th>
-        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+        <th class="text-left" style="width: 170px;padding-left: 30px">七天净增额（元）</th>
     </tr>
     </thead>
     <tbody >
-    <caption class="text-center" style="font-size: larger">京东众筹</caption>
+    <!--<caption class="text-center" style="font-size: larger;color: #F3565D">京东众筹</caption>-->
+    <caption class="text-center" style="font-size: x-large;color: #F3565D"><img src="https://s3.cn-north-1.amazonaws.com.cn/index/m/common/images/platformPage/2.png" style="width: 20px;height: 20px"  alt="京东众筹"></img>  京东众筹</caption>
     <th:block th:each="product,productStat:${jdweek}">
         <tr >
             <td >
@@ -31,19 +32,22 @@
                 <span th:text="${product.productName}">产品名称</span>
             </td>
             <td class="text-right" style="padding-right: 60px">
-                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">七天净增额</span>
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
             </td>
         </tr>
     </th:block>
     </tbody>
 </table>
 <table class="table table-striped">
-    <caption class="text-center" style="font-size: larger">淘宝众筹</caption>
+
+    <!--<caption class="text-center" style="font-size: larger;color: #F8CB00">淘宝众筹</caption>-->
+    <caption class="text-center" style="font-size: x-large;color: #F8CB00"><img src="https://s3.cn-north-1.amazonaws.com.cn/index/m/common/images/platformPage/1.png" style="width: 20px;height: 20px"  alt="淘宝众筹"></img>  淘宝众筹</caption>
+
     <thead>
-    <tr style="background-color: #358de6">
+    <tr style="background-color: #358de6;color: white">
         <th style="width: 50px">#</th>
         <th style="width: 300px" >项目名称</th>
-        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+        <th class="text-left" style="width: 170px;padding-left: 30px">七天净增额（元）</th>
     </tr>
     </thead>
     <tbody >
@@ -57,7 +61,7 @@
                 <span th:text="${product.productName}">产品名称</span>
             </td>
             <td class="text-right" style="padding-right: 60px">
-                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">七天净增额</span>
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
             </td>
         </tr>
     </th:block>
@@ -65,14 +69,16 @@
 </table>
 <table class="table table-striped">
     <thead>
-    <tr style="background-color: #358de6">
+    <tr style="background-color: #358de6;color: white">
         <th style="width: 50px">#</th>
         <th style="width: 300px" >项目名称</th>
-        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+        <th class="text-left" style="width: 170px;padding-left: 30px">七天净增额（元）</th>
     </tr>
     </thead>
     <tbody >
-    <caption class="text-center" style="font-size: larger">Kickstarter</caption>
+    <!--<caption class="text-center" style="font-size: larger;color: #45B7AF">Kickstarter</caption>-->
+    <caption class="text-center" style="font-size: x-large;color: #45B7AF"><img src="https://s3.cn-north-1.amazonaws.com.cn/index/m/common/images/platformPage/3.png" style="width: 20px;height: 20px"  alt="Kickstarter"></img>  Kickstarter</caption>
+
     <th:block th:each="product,productStat:${ksweek}">
         <tr >
             <td >
@@ -83,7 +89,7 @@
                 <span th:text="${product.productName}">产品名称</span>
             </td>
             <td class="text-right" style="padding-right: 60px">
-                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">七天净增额</span>
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
             </td>
         </tr>
     </th:block>
@@ -91,14 +97,15 @@
 </table>
 <table class="table table-striped" >
     <thead>
-    <tr style="background-color: #358de6">
+    <tr style="background-color: #358de6;color: white">
         <th style="width: 50px">#</th>
         <th style="width: 300px" >项目名称</th>
-        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+        <th class="text-left" style="width: 170px;padding-left: 30px">七天净增额（元）</th>
     </tr>
     </thead>
     <tbody >
-    <caption class="text-center" style="font-size: larger">Indiegogo</caption>
+    <!--<caption class="text-center" style="font-size: larger;color: #F9AAAE">Indiegogo</caption>-->
+    <caption class="text-center" style="font-size: x-large;color: #F9AAAE"><img src="https://s3.cn-north-1.amazonaws.com.cn/index/m/common/images/platformPage/4.png" style="width: 20px;height: 20px"  alt="Indiegogo"></img>  Indiegogo</caption>
     <th:block th:each="product,productStat:${inweek}">
         <tr >
             <td >
@@ -109,7 +116,7 @@
                 <span th:text="${product.productName}">产品名称</span>
             </td>
             <td class="text-right" style="padding-right: 60px">
-                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 2, 'POINT')}">七天净增额</span>
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
             </td>
         </tr>
     </th:block>
