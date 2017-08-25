@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>极客视界</title>
+    <link rel="icon" type="image/png" href="image/favicon.ico"></link>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link href="css/index.css" rel="stylesheet"></link>
+</head>
+<body>
+<img src="image/head.png" class="img-responsive" alt="极客视界"></img>
+<div th:text="'统计截止时间：'+${#dates.format(weekBeforeDate, 'yyyy年MM月dd日')}+'-'+${#dates.format(nowDate, 'yyyy年MM月dd日12时')}" style="font-size: larger;background-color: #b1b4b6;padding-left: 10px">统计截止时间：2017年08月15日12时</div>
+<table class="table table-striped">
+    <thead>
+    <tr style="background-color: #358de6">
+        <th style="width: 50px">#</th>
+        <th style="width: 300px" >项目名称</th>
+        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+    </tr>
+    </thead>
+    <tbody >
+    <caption class="text-center" style="font-size: larger">京东众筹</caption>
+    <th:block th:each="product,productStat:${jdweek}">
+        <tr >
+            <td >
+                <span th:if="${productStat.index}+1 le 3" th:text="${productStat.index}+1" class="table_list__circle top3">编号</span>
+                <span th:if="${productStat.index}+1 gt 3" th:text="${productStat.index}+1" class="table_list__circle"></span>
+            </td>
+            <td>
+                <span th:text="${product.productName}">产品名称</span>
+            </td>
+            <td class="text-right" style="padding-right: 60px">
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<table class="table table-striped">
+    <caption class="text-center" style="font-size: larger">淘宝众筹</caption>
+    <thead>
+    <tr style="background-color: #358de6">
+        <th style="width: 50px">#</th>
+        <th style="width: 300px" >项目名称</th>
+        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+    </tr>
+    </thead>
+    <tbody >
+    <th:block th:each="product,productStat:${tbweek}">
+        <tr >
+            <td >
+                <span th:if="${productStat.index}+1 le 3" th:text="${productStat.index}+1" class="table_list__circle top3">编号</span>
+                <span th:if="${productStat.index}+1 gt 3" th:text="${productStat.index}+1" class="table_list__circle"></span>
+            </td>
+            <td>
+                <span th:text="${product.productName}">产品名称</span>
+            </td>
+            <td class="text-right" style="padding-right: 60px">
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<table class="table table-striped">
+    <thead>
+    <tr style="background-color: #358de6">
+        <th style="width: 50px">#</th>
+        <th style="width: 300px" >项目名称</th>
+        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+    </tr>
+    </thead>
+    <tbody >
+    <caption class="text-center" style="font-size: larger">Kickstarter</caption>
+    <th:block th:each="product,productStat:${ksweek}">
+        <tr >
+            <td >
+                <span th:if="${productStat.index}+1 le 3" th:text="${productStat.index}+1" class="table_list__circle top3">编号</span>
+                <span th:if="${productStat.index}+1 gt 3" th:text="${productStat.index}+1" class="table_list__circle"></span>
+            </td>
+            <td>
+                <span th:text="${product.productName}">产品名称</span>
+            </td>
+            <td class="text-right" style="padding-right: 60px">
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<table class="table table-striped" >
+    <thead>
+    <tr style="background-color: #358de6">
+        <th style="width: 50px">#</th>
+        <th style="width: 300px" >项目名称</th>
+        <th class="text-left" style="width: 170px">七天净增额（元）</th>
+    </tr>
+    </thead>
+    <tbody >
+    <caption class="text-center" style="font-size: larger">Indiegogo</caption>
+    <th:block th:each="product,productStat:${inweek}">
+        <tr >
+            <td >
+                <span th:if="${productStat.index}+1 le 3" th:text="${productStat.index}+1" class="table_list__circle top3">编号</span>
+                <span th:if="${productStat.index}+1 gt 3" th:text="${productStat.index}+1" class="table_list__circle"></span>
+            </td>
+            <td>
+                <span th:text="${product.productName}">产品名称</span>
+            </td>
+            <td class="text-right" style="padding-right: 60px">
+                <span th:text="${#numbers.formatDecimal(product.growthMoney,0, 'COMMA', 0, 'POINT')}">七天净增额</span>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+</body>
+</html>
