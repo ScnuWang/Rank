@@ -2,7 +2,10 @@ body,button, input, select,textarea,h1 ,h2, h3, h4, h5, h6 { font-family: Micros
 .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: #e0edfd;
 }
-
+/*调整表单底部的空白大小*/
+.table{
+    margin-bottom: 0px;
+}
 
 
 .table_list__circle {
