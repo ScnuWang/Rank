@@ -47,7 +47,7 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 logger.info(key+"从Mysql中查询日期一周前开始众筹的产品");
                 oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
                 redisService.set(key+"oldlist",oldlist);
-                redisService.expire(key+"newlist",12*60*60);
+                redisService.expire(key+"newlist",6*60*60);
             }
             //查询日期一周内新上的
             logger.info(key+"从Redis中查询日期一周内新上的产品");
@@ -55,7 +55,7 @@ public class TDreamProductServiceImpl implements TDreamProductService {
             if (newlist==null||newlist.size()==0){
                 logger.info(key+"从Mysql中查询日期一周内新上的产品");
                 newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
-                redisService.set(key+"newlist",oldlist);
+                redisService.set(key+"newlist",newlist);
                 redisService.expire(key+"newlist",12*60*60);
             }
             alllist.addAll(oldlist);
