@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.*;
 
 @Service("TDreamProductServiceImpl")
@@ -47,7 +46,7 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 logger.info(key+"从Mysql中查询日期一周前开始众筹的产品");
                 oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
                 redisService.set(key+"oldlist",oldlist);
-                redisService.expire(key+"newlist",6*60*60);
+                redisService.expire(key+"newlist",2*60*60);
             }
             //查询日期一周内新上的
             logger.info(key+"从Redis中查询日期一周内新上的产品");
@@ -56,7 +55,7 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 logger.info(key+"从Mysql中查询日期一周内新上的产品");
                 newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
                 redisService.set(key+"newlist",newlist);
-                redisService.expire(key+"newlist",12*60*60);
+                redisService.expire(key+"newlist",2*60*60);
             }
             alllist.addAll(oldlist);
             alllist.addAll(newlist);
@@ -87,6 +86,7 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 maParm.put(key+"WeekList",resultlist.subList(0,5));
             }
         });
+        logger.info("当前时间："+date.toDate());
         maParm.put("nowDate",date.toDate());
         maParm.put("weekBeforeDate",date.plusDays(-7).toDate());
         return maParm;

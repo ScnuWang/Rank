@@ -9,7 +9,7 @@
     <link href="css/index.css" rel="stylesheet"></link>
 </head>
 <body>
-<img src="image/head.png" class="img-responsive" alt="极客视界"></img>
+<img src="image/overseas.png" class="img-responsive" style="width: 100%" alt="极客视界"></img>
 <div th:text="'统计截止时间：'+${#dates.format(updateDate, 'yyyy年MM月dd日12时')}" style="font-size: larger;background-color: #b1b4b6;padding-left: 10px">统计截止时间：2017年08月15日12时</div>
 <table class="table table-striped">
     <thead>
@@ -20,8 +20,8 @@
     </tr>
     </thead>
     <tbody >
-        <caption class="text-center" style="font-size: larger">Kickstar</caption>
-        <th:block th:each="product,productStat:${ksTop5}">
+    <caption class="text-center" style="font-size: x-large;color: #45B7AF"><img src="https://s3.cn-north-1.amazonaws.com.cn/index/m/common/images/platformPage/3.png" style="width: 20px;height: 20px"  alt="Kickstarter"></img>  Kickstarter</caption>
+    <th:block th:each="product,productStat:${ksTop5}">
             <tr >
                 <td >
                     <span th:if="${productStat.index}+1 le 3" th:text="${productStat.index}+1" class="table_list__circle top3">编号</span>
@@ -38,7 +38,7 @@
     </tbody>
 </table>
 <table class="table table-striped">
-    <caption class="text-center" style="font-size: larger">Indiegogo</caption>
+    <caption class="text-center" style="font-size: x-large;color: #F9AAAE"><img src="https://s3.cn-north-1.amazonaws.com.cn/index/m/common/images/platformPage/4.png" style="width: 20px;height: 20px"  alt="Indiegogo"></img>  Indiegogo</caption>
     <thead>
     <tr style="background-color: #358de6">
         <th style="width: 50px">#</th>

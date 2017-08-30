@@ -20,10 +20,10 @@ public interface TDreamProductMapper {
                     "ORDER BY t.growth_money DESC LIMIT 5 ";
 
     //查询时间一周前开始众筹的项目增速榜前5名
-    String sql_7days_oldprojects = "SELECT t1.original_id,t1.project_name,IFNULL(t1.money_currency,'CNY') as money_currency,t2.curr_money-t1.curr_money as growthMoney " +
-            "FROM ${tableName} t1 RIGHT JOIN ( SELECT t.original_id, t.project_name, t.curr_money FROM ${tableName} t " +
+    String sql_7days_oldprojects = "SELECT t1.original_id,t1.project_name,IFNULL(t1.money_currency,'CNY') as money_currency,t2.curr_money-t1.curr_money as growth_money ,t2.update_date " +
+            "FROM ${tableName} t1 RIGHT JOIN ( SELECT t.original_id, t.project_name, t.curr_money, t.update_date   FROM ${tableName} t " +
             "WHERE t.update_date = #{nowDate} ) t2 ON t1.original_id = t2.original_id " +
-            "WHERE t1 .update_date = #{weekBeforeDate} ORDER BY growthMoney DESC limit 5";
+            "WHERE t1 .update_date = #{weekBeforeDate} ORDER BY growth_money DESC limit 5";
 
     //查询时间一周内新上的项目增速榜前5名
     String sql_7days_newprojects = "SELECT t.original_id, t.project_name, IFNULL(t.money_currency, 'CNY') as money_currency , t.curr_money " +
@@ -45,6 +45,7 @@ public interface TDreamProductMapper {
             @Result(property = "productName",column = "project_name",jdbcType = JdbcType.VARCHAR),
             @Result(property = "moneyCurrency",column = "money_currency",jdbcType = JdbcType.VARCHAR),
             @Result(property = "growthMoney",column = "growth_money",jdbcType = JdbcType.DECIMAL),
+            @Result(property = "updateDate",column = "update_date",jdbcType = JdbcType.DECIMAL),
     })
     List<TDreamProduct> query7DaysOldpeojectsRankTop5(@Param("nowDate") Date nowDate,@Param("weekBeforeDate") Date weekBeforeDate,@Param("tableName") String tableName);
 
