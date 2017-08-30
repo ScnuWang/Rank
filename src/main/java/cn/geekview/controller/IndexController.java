@@ -9,9 +9,14 @@ import java.io.IOException;
 @Controller
 public class IndexController {
 
-    @RequestMapping("index")
+    @RequestMapping("/index")
     public String index(){
         return "index";
+    }
+
+    @RequestMapping("/errortest")
+    public String errortest(){
+        return "error";
     }
 
     /**
