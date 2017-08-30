@@ -17,6 +17,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @Configuration
@@ -60,6 +65,21 @@ public class RedisConfig extends CachingConfigurerSupport  {
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        /**
+         * om.setDateFormat(DateFormat.getDateTimeInstance());//格式化时间
+         * 直接使用这种方式格式化时间的话，在Windows和在Linux上格式化后的时间格式是不一样的
+         * Windows：2017-8-30 12:00:00
+         * Linux：Aug 30, 2017 12:00:00 PM
+         * 这样会出现这种情况：
+         *      在Windows上序列化之后，在Linux上反序列化时识别不了，导致反序列化失败
+         *      提示如下：
+         *      org.springframework.data.redis.serializer.SerializationException: Could not read JSON: Can not deserialize value of type java.util.Date from String "2017-8-30 12:00:00":
+         *           not a valid representation (error: Failed to parse Date value '2017-8-30 12:00:00': Unparseable date: "2017-8-30 12:00:00")
+         *  解决办法：
+         *  om.setDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"));
+         */
+//        om.setDateFormat(DateFormat.getDateTimeInstance());//格式化时间
+        om.setDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"));
         jackson2JsonRedisSerializer.setObjectMapper(om);
         template.setValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
