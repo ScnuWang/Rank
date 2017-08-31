@@ -14,11 +14,6 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/errortest")
-    public String errortest(){
-        return "error";
-    }
-
     /**
      * 重定向到指定地址
      * @param response
