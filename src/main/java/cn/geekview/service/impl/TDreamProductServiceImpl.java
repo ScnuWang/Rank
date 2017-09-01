@@ -17,7 +17,6 @@ public class TDreamProductServiceImpl implements TDreamProductService {
 
     protected Logger logger = Logger.getLogger(this.getClass());
 
-    private DateTime date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth(),12,0,0);
 
     @Autowired
     private TDreamProductMapper productMapper;
@@ -31,6 +30,8 @@ public class TDreamProductServiceImpl implements TDreamProductService {
      */
     @Override
     public Map<String, List> query7DaysPlatformGrowthSpeedRankTop5() {
+
+        DateTime date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth(),12,0,0);
         Map table = new HashMap();
         Map maParm = new HashMap();
         table.put("tb","t_dream_tb_project");

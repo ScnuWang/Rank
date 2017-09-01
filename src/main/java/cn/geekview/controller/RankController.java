@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 每日增速排行榜前五
- * 分国内国外
+ * 1、最近7天增速排行榜前五
+ * 2、每日增速排行榜前五 分国内国外
  */
 @Controller
 public class RankController {
