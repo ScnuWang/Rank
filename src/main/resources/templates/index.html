@@ -11,15 +11,10 @@
 <body>
     <h1 style="text-align: center"><a href="/redirect?url=http://www.geekview.cn">极客视界官网</a></h1>
 
-        <form action="/file" method="post" enctype="multipart/form-data">
-            <input type="file" name="filename1"></input>
-            <input type="file" name="filename2"></input>
-            <input type="submit" value="上传"></input>
-        </form>
-            <!-- 1、表单方式必须是post
-              2、必须设置encType属性为 multipart/form-data.设置该值后，浏览器在上传文件时，将会把文件数据附带在http请求消息体中，
-                并使用MIME协议对上传的文件进行描述，以方便接收方对上传数据进行解析和处理。
-              3、必须要设置input的name属性，否则浏览器将不会发送上传文件的数据。
-            -->
+    <form name="Form" action="/file" method="post"  enctype="multipart/form-data">
+        <h1>采用multipart提供的file.transfer方法上传单个文件</h1>
+        <input type="file" name="singleFile"></input>
+        <input type="submit" value="upload"></input>
+    </form>
 </body>
 </html>
