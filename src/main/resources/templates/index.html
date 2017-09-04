@@ -13,8 +13,15 @@
 
     <form name="Form" action="/file" method="post"  enctype="multipart/form-data">
         <h1>采用multipart提供的file.transfer方法上传单个文件</h1>
-        <input type="file" name="singleFile"></input>
-        <input type="submit" value="upload"></input>
+        <input type="file" name="file"></input>
+        <input type="submit" value="上传"></input>
+    </form>
+
+    <form name="Form2" action="/files/batch" method="post"  enctype="multipart/form-data">
+        <h1>采用multipart提供的file.transfer方法上传多个文件</h1>
+        <input type="file" name="file"></input>
+        <input type="file" name="file"></input>
+        <input type="submit" value="上传"></input>
     </form>
 </body>
 </html>

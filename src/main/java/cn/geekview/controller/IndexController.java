@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsFileUploadSupport;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -67,9 +68,26 @@ public class IndexController {
      * @throws ServletException
      */
     @RequestMapping(value = "/file",method = RequestMethod.POST)
-    public  String  fileUpload(@RequestParam("singleFile") MultipartFile multipartFile) throws IOException, ServletException {
+    public  String  fileUpload(@RequestParam("file") MultipartFile multipartFile) throws IOException, ServletException {
         File file = new File(staticUrl+UUID.randomUUID()+multipartFile.getOriginalFilename());
         multipartFile.transferTo(file);
+        return "index";
+    }
+
+    /**
+     * 同时上传多个文件
+     * @param request
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
+    @RequestMapping(value = "/files/batch",method = RequestMethod.POST)
+    public  String  filesUpload(HttpServletRequest request) throws IOException, ServletException {
+        List<MultipartFile> list =((MultipartHttpServletRequest)request).getFiles("file");
+        for (MultipartFile multipartFile : list) {
+            File file = new File(staticUrl+UUID.randomUUID()+multipartFile.getOriginalFilename());
+            multipartFile.transferTo(file);
+        }
         return "index";
     }
 }
