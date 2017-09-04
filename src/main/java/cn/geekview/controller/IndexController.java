@@ -68,7 +68,6 @@ public class IndexController {
      */
     @RequestMapping(value = "/file",method = RequestMethod.POST)
     public  String  fileUpload(@RequestParam("singleFile") MultipartFile multipartFile) throws IOException, ServletException {
-        System.out.println(staticUrl);
         File file = new File(staticUrl+UUID.randomUUID()+multipartFile.getOriginalFilename());
         multipartFile.transferTo(file);
         return "index";
