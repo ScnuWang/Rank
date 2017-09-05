@@ -1,29 +1,19 @@
 package cn.geekview.controller;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsFileUploadSupport;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,9 +58,17 @@ public class IndexController {
      * @throws ServletException
      */
     @RequestMapping(value = "/file",method = RequestMethod.POST)
-    public  String  fileUpload(@RequestParam("file") MultipartFile multipartFile) throws IOException, ServletException {
-        File file = new File(staticUrl+UUID.randomUUID()+multipartFile.getOriginalFilename());
-        multipartFile.transferTo(file);
+    public  String  fileUpload(@RequestParam("file") MultipartFile multipartFile){
+//        File file = new File(staticUrl+UUID.randomUUID()+multipartFile.getOriginalFilename());
+        //如果这里不设置文件路径的话，可以在属性文件中配置存放路径
+        //文件异常信息处理，比如上传文件过大，格式不正确，当然可以直接在前端对文件大小进行验证，但是服务器最好还是要做处理
+        File file = new File(UUID.randomUUID()+multipartFile.getOriginalFilename());
+        try {
+            multipartFile.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.info("文件上传异常："+e.getMessage());
+        }
         return "index";
     }
 
@@ -82,11 +80,15 @@ public class IndexController {
      * @throws ServletException
      */
     @RequestMapping(value = "/files/batch",method = RequestMethod.POST)
-    public  String  filesUpload(HttpServletRequest request) throws IOException, ServletException {
+    public  String  filesUpload(HttpServletRequest request) {
         List<MultipartFile> list =((MultipartHttpServletRequest)request).getFiles("file");
         for (MultipartFile multipartFile : list) {
             File file = new File(staticUrl+UUID.randomUUID()+multipartFile.getOriginalFilename());
-            multipartFile.transferTo(file);
+            try {
+                multipartFile.transferTo(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return "index";
     }
