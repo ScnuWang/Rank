@@ -39,8 +39,6 @@ public class LoginController {
 
     @GetMapping("/sinaLogin")
    public void sinaLogin(HttpServletResponse response){
-        //https://api.weibo.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI
-
         //https://api.weibo.com/oauth2/authorize?client_id=3967331671&redirect_uri=http://1670a21b58.imwork.net/login&response_type=code
         String loginUrl = authorizeURL+"?client_id="+client_ID+"&response_type=code"+"&redirect_uri="+redirect_URI;
         try {
@@ -50,7 +48,7 @@ public class LoginController {
             //登录失败
         }
    }
-   @GetMapping("/loginCallBack")
+   @GetMapping("/sinaLoginCallBack")
    public String loginCallBack(@RequestParam("code") String code){
        System.out.println("code="+code);
        RestTemplate restTemplate = new RestTemplate();
@@ -63,10 +61,4 @@ public class LoginController {
        System.out.println("uid="+jsonObject.get("uid"));
        return "login";
    }
-
-
-
-
-
-
 }
