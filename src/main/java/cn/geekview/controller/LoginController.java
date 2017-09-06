@@ -48,6 +48,7 @@ public class LoginController {
             //登录失败
         }
    }
+
    @GetMapping("/sinaLoginCallBack")
    public String loginCallBack(@RequestParam("code") String code){
        System.out.println("code="+code);
