@@ -23,7 +23,7 @@ public interface TDreamProductMapper {
     String sql_7days_oldprojects = "SELECT t1.original_id,t1.project_name,IFNULL(t1.money_currency,'CNY') as money_currency,t2.curr_money-t1.curr_money as growth_money ,t2.update_date " +
             "FROM ${tableName} t1 RIGHT JOIN ( SELECT t.original_id, t.project_name, t.curr_money, t.update_date   FROM ${tableName} t " +
             "WHERE t.update_date = #{nowDate} ) t2 ON t1.original_id = t2.original_id " +
-            "WHERE t1 .update_date = #{weekBeforeDate} ORDER BY growth_money DESC limit 5";
+            "WHERE t1 .update_date = #{weekBeforeDate} ORDER BY growth_money DESC limit 10";
 
     //查询时间一周内新上的项目增速榜前5名
     String sql_7days_newprojects = "SELECT t.original_id, t.project_name, IFNULL(t.money_currency, 'CNY') as money_currency , t.curr_money " +
@@ -32,6 +32,7 @@ public interface TDreamProductMapper {
             "AND t.original_id NOT IN " +
             "( SELECT t.original_id FROM ${tableName} t WHERE t.update_date = #{weekBeforeDate}) " +
             "ORDER BY t.curr_money DESC LIMIT 35";
+
     /**
      * 根据更新时间和平台编号查询平台一周的增速榜前5名
      * @param nowDate  当前查询时间
@@ -97,5 +98,7 @@ public interface TDreamProductMapper {
             @Result(property = "growthMoney",column = "growth_money",jdbcType = JdbcType.DECIMAL),
     })
     List<TDreamProduct> queryPlatformGrowthSpeedRankTop5(@Param("updateDate") Date updateDate,@Param("website") Integer website);
+
+
 
 }

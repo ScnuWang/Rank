@@ -98,29 +98,54 @@ public class TDreamProductServiceImpl implements TDreamProductService {
     //第一次查询放入redis中，后面直接从redis中取值
     @Override
     public Map<String,List> queryPlatformGrowthSpeedRankTop5() {
-        //如果当天的数据还没有完全产生，则展示前一天的
-        Date date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth(),12,0,0).toDate();
+
+        DateTime date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth(),12,0,0);
         Map maparm = new HashMap<String,List>();
-        //这里需要优化一下
-        List<TDreamProduct> tbList = productMapper.queryPlatformGrowthSpeedRankTop5(date,1);
-        List<TDreamProduct> jdList = productMapper.queryPlatformGrowthSpeedRankTop5(date,2);
-        List<TDreamProduct> ksList = productMapper.queryPlatformGrowthSpeedRankTop5(date,3);
-        List<TDreamProduct> inList = productMapper.queryPlatformGrowthSpeedRankTop5(date,4);
 
-        if(tbList.size()==0||jdList.size()==0||ksList.size()==0||inList.size()==0){
-            date = new DateTime(DateTime.now().getYear(),DateTime.now().getMonthOfYear(),DateTime.now().getDayOfMonth()-1,12,0,0).toDate();
-            tbList = productMapper.queryPlatformGrowthSpeedRankTop5(date,1);
-            jdList = productMapper.queryPlatformGrowthSpeedRankTop5(date,2);
-            ksList = productMapper.queryPlatformGrowthSpeedRankTop5(date,3);
-            inList = productMapper.queryPlatformGrowthSpeedRankTop5(date,4);
+        List<TDreamProduct> tbList = productMapper.queryPlatformGrowthSpeedRankTop5(date.toDate(),1);
+        List<TDreamProduct> jdList = productMapper.queryPlatformGrowthSpeedRankTop5(date.toDate(),2);
+        List<TDreamProduct> ksList = productMapper.queryPlatformGrowthSpeedRankTop5(date.toDate(),3);
+
+        //Indiegogo由于抓取方式修改之后暂时没有进行整体分析，所以日榜需要分开查询
+        List<TDreamProduct> alllist = new ArrayList<>();
+        //查询日期一天在筹的
+        List oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-1).toDate(),"t_dream_in_project");
+
+        //查询日期一天内新上的
+        List newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-1).toDate(),"t_dream_in_project");
+
+        alllist.addAll(oldlist);
+        alllist.addAll(newlist);
+        //换算
+        if (alllist != null&&alllist.size()>0) {
+            for (TDreamProduct product : alllist) {
+                if (product!=null){
+                    BigDecimal currencyExchange =  redisService.getCurrencyExchange(product.getMoneyCurrency());
+                    BigDecimal growthMoneyCNY =  currencyExchange.multiply(product.getGrowthMoney());
+                    product.setGrowthMoney(growthMoneyCNY);
+                    product.setMoneyCurrency("CNY");
+                }
+            }
+            //排序
+            Collections.sort(alllist, (o1, o2) -> {//默认是升序排列，如果要降序，将对象互换即可
+                return o2.getGrowthMoney().compareTo(o1.getGrowthMoney());
+            });
+            //去重
+            Set<TDreamProduct> set = new HashSet<>();
+            for (TDreamProduct product : alllist) {
+                set.add(product);
+            }
+            //排序 ：不能将声明提出去，不然set没数据，list就new出来了
+            List<TDreamProduct> resultlist = new ArrayList<>(set);
+            Collections.sort(resultlist, (o1, o2) -> {//默认是升序排列，如果要降序，将对象互换即可
+                return o2.getGrowthMoney().compareTo(o1.getGrowthMoney());
+            });
+            maparm.put("inTop5",resultlist.subList(0,5));
         }
-
         maparm.put("tbTop5",tbList);
         maparm.put("jdTop5",jdList);
         maparm.put("ksTop5",ksList);
-        maparm.put("inTop5",inList);
         maparm.put("updateDate",date);
-
         return maparm;
     }
 
