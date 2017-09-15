@@ -7,6 +7,7 @@ import cn.geekview.mapper.TDreamProductMapper;
 import cn.geekview.service.RedisService;
 import cn.geekview.service.TDreamProductService;
 import com.xiaoleilu.hutool.util.BeanUtil;
+import org.jasypt.encryption.StringEncryptor;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,12 +34,22 @@ public class DatasourceTest {
 
     @Autowired
     private TDreamProductService productService;
-//    @Test
-//    public void test6(){
-//        for (TDreamCurrency currency : currencyMapper.queryCurrency()) {
-//            System.out.println(BeanUtil.beanToMap(currency).get("currencyNick"));
-//        }
-//    }
+
+    @Autowired
+    private StringEncryptor encryptor;
+
+    @Test
+    public void test(){
+        String result = encryptor.encrypt("b55545f5b3ec8229");
+        System.out.println(result);
+    }
+
+    @Test
+    public void test6(){
+        for (TDreamCurrency currency : currencyMapper.queryCurrency()) {
+            System.out.println(BeanUtil.beanToMap(currency).get("currencyNick"));
+        }
+    }
 
 
 //    @Test
@@ -93,7 +104,6 @@ public class DatasourceTest {
     public void test0(){
         DateTime dateTime = new DateTime(2017,8,11,12,0,0);
         System.out.println(productMapper.queryAllGrowthSpeedRank(dateTime.toDate()).size());
-
     }
 
 
