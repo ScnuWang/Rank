@@ -65,7 +65,12 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 for (TDreamProduct product : alllist) {
                     if (product!=null){
                         BigDecimal currencyExchange =  redisService.getCurrencyExchange(product.getMoneyCurrency());
-                        BigDecimal growthMoneyCNY =  currencyExchange.multiply(product.getGrowthMoney());
+                        BigDecimal growthMoneyCNY;
+                        if (product.getGrowthMoney()!=null&&currencyExchange!=null){
+                            growthMoneyCNY =  currencyExchange.multiply(product.getGrowthMoney());
+                        }else {
+                            growthMoneyCNY=  new BigDecimal(0);
+                        }
                         product.setGrowthMoney(growthMoneyCNY);
                         product.setMoneyCurrency("CNY");
                     }
@@ -111,11 +116,11 @@ public class TDreamProductServiceImpl implements TDreamProductService {
         //查询日期一天在筹的
         List oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-1).toDate(),"t_dream_in_project");
 
-        //查询日期一天内新上的
-        List newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-1).toDate(),"t_dream_in_project");
+        //查询日期一天内新上的(indiegogo处理一下，新上的状态需进一步查验)
+//        List newlist = productMapper.query7DaysNewpeojectsRankTop5(date.plusDays(1).toDate(),date.plusDays(-1).toDate(),"t_dream_in_project");
 
         alllist.addAll(oldlist);
-        alllist.addAll(newlist);
+        //alllist.addAll(newlist);
         //换算
         if (alllist != null&&alllist.size()>0) {
             for (TDreamProduct product : alllist) {

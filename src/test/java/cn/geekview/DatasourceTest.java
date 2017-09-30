@@ -1,7 +1,6 @@
 package cn.geekview;
 
 import cn.geekview.domain.TDreamCurrency;
-import cn.geekview.domain.TDreamProduct;
 import cn.geekview.mapper.TDreamCurrencyMapper;
 import cn.geekview.mapper.TDreamProductMapper;
 import cn.geekview.service.RedisService;
@@ -14,10 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -40,7 +35,7 @@ public class DatasourceTest {
 
     @Test
     public void test(){
-        String result = encryptor.encrypt("b55545f5b3ec8229");
+        String result = encryptor.encrypt("root");
         System.out.println(result);
     }
 
