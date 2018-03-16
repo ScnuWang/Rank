@@ -47,7 +47,7 @@ public class TDreamProductServiceImpl implements TDreamProductService {
                 logger.info(key+"从Mysql中查询日期一周前开始众筹的产品");
                 oldlist = productMapper.query7DaysOldpeojectsRankTop5(date.toDate(),date.plusDays(-7).toDate(),String.valueOf(value));
                 redisService.set(key+"oldlist",oldlist);
-                redisService.expire(key+"newlist",2*60*60);
+                redisService.expire(key+"oldlist",2*60*60);
             }
             //查询日期一周内新上的
             logger.info(key+"从Redis中查询日期一周内新上的产品");
